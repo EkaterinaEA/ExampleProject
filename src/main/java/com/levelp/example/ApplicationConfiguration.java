@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -25,7 +25,8 @@ import javax.persistence.Persistence;
 @EnableJpaRepositories
 @ComponentScan(basePackages = "com.levelp.example")
 @Import(SecurityConfiguration.class)
-public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
+public class ApplicationConfiguration implements WebMvcConfigurer {
+
     @Bean(name = "entityManagerFactory")
     public EntityManagerFactory createEntityManagerFactory() {
         return Persistence.createEntityManagerFactory("ProdPersistenceUnit");
@@ -45,7 +46,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        super.addResourceHandlers(registry);
+    //    super.addResourceHandlers(registry);
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("/pages/static/");
     }
